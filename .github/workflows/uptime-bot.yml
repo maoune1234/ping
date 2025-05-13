@@ -1,8 +1,9 @@
 # .github/workflows/uptime-bot.yml
+
 name: Uptime Bot
 
 on:
-  workflow_dispatch:  # يُطلق من خارجي عبر GitHub API
+  workflow_dispatch:
 
 jobs:
   ping:
@@ -16,11 +17,13 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Load .env
-        env:
-          URLS: ${{ secrets.URLS }}
+      - name: Load .env from multiple secrets
         run: |
-          echo "URLS=\"$URLS\"" >> .env
+          echo "URLS=\"$URL1 $URL2 $URL3\"" >> .env
+        env:
+          URL1: ${{ secrets.URL1 }}
+          URL2: ${{ secrets.URL2 }}
+          URL3: ${{ secrets.URL3 }}
 
       - name: Install dependencies
         run: npm ci
