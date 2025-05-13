@@ -9,6 +9,10 @@ jobs:
   ping:
     runs-on: ubuntu-latest
 
+    # نجمع جميع الروابط في متغيّر واحد هنا
+    env:
+      URLS: ${{ secrets.URL1 }} ${{ secrets.URL2 }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -17,21 +21,6 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-
-      - name: Load .env from available secrets
-        run: |
-          # نبدأ المتغيّر
-          echo -n "URLS=\"" >> .env
-          # نضيف كل رابط إذا وُجد
-          [ -n "$URL1" ] && echo -n "$URL1 " >> .env
-          [ -n "$URL2" ] && echo -n "$URL2 " >> .env
-          [ -n "$URL3" ] && echo -n "$URL3 " >> .env
-          # تغلق الاقتباس
-          echo "\"" >> .env
-        env:
-          URL1: ${{ secrets.URL1 }}
-          URL2: ${{ secrets.URL2 }}
-          URL3: ${{ secrets.URL3 }}
 
       - name: Install dependencies
         run: |
