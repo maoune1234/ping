@@ -1,6 +1,6 @@
 # .github/workflows/uptime-bot.yml
 
-name: Uptime Bot
+name: Uptime Bot (Python)
 
 on:
   workflow_dispatch:
@@ -12,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          node-version: '18'
+          python-version: '3.11'
 
       - name: Load .env from multiple secrets
         run: |
@@ -26,7 +26,8 @@ jobs:
           URL3: ${{ secrets.URL3 }}
 
       - name: Install dependencies
-        run: npm ci
+        run: pip install requests
 
       - name: Run uptime ping
-        run: npm run ping
+        run: |
+          python ping.py
