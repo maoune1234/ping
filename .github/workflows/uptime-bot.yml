@@ -10,23 +10,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      - name: Load .env from multiple secrets
+      - name: Load .env from available secrets
         run: |
-          echo "URLS=\"$URL1 $URL2 $URL3\"" >> .env
+          # نبدأ المتغيّر
+          echo -n "URLS=\"" >> .env
+          # نضيف كل رابط إذا وُجد
+          [ -n "$URL1" ] && echo -n "$URL1 " >> .env
+          [ -n "$URL2" ] && echo -n "$URL2 " >> .env
+          [ -n "$URL3" ] && echo -n "$URL3 " >> .env
+          # تغلق الاقتباس
+          echo "\"" >> .env
         env:
           URL1: ${{ secrets.URL1 }}
           URL2: ${{ secrets.URL2 }}
           URL3: ${{ secrets.URL3 }}
 
       - name: Install dependencies
-        run: pip install requests
+        run: |
+          pip install requests
 
       - name: Run uptime ping
         run: |
