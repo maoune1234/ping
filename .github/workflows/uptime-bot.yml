@@ -1,10 +1,8 @@
+# .github/workflows/uptime-bot.yml
 name: Uptime Bot
 
 on:
-  schedule:
-    # كل 10 دقائق
-    - cron:  '*/10 * * * *'
-  workflow_dispatch:  # خيار لتشغيله يدوياً من واجهة GitHub
+  workflow_dispatch:  # يُطلق من خارجي عبر GitHub API
 
 jobs:
   ping:
@@ -21,10 +19,8 @@ jobs:
       - name: Load .env
         env:
           URLS: ${{ secrets.URLS }}
-          TIMEOUT_MS: ${{ secrets.TIMEOUT_MS }}
         run: |
           echo "URLS=\"$URLS\"" >> .env
-          echo "TIMEOUT_MS=$TIMEOUT_MS" >> .env
 
       - name: Install dependencies
         run: npm ci
