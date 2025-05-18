@@ -11,7 +11,7 @@ jobs:
 
     # نجمع جميع الروابط في متغيّر واحد هنا
     env:
-      URLS: ${{ secrets.URL1 }} ${{ secrets.URL2 }}
+      URLS: ${{ secrets.URL1 }} ${{ secrets.URL2 }} ${{ secrets.URL2 }}
 
     steps:
       - name: Checkout repository
